@@ -14,7 +14,7 @@ pairs = [(x, y) | x <- ['a' .. 'z'], y <- [0 ..]]
 -- Data type Stream is a simplified version of the interlieving search implementation
 -- More in "Backtracking, Interleaving, and Terminating Monad Transformers":
 -- https://okmij.org/ftp/papers/LogicT.pdf
-newtype Stream a = Stream {getStream :: [a]}
+newtype Stream a = Stream { getStream :: [a] }
   deriving (Functor, Show)
 
 instance Applicative Stream where
@@ -40,3 +40,8 @@ takeS _ _ = Stream []
 -- Stream {getStream = [('a',0),('b',0),('a',1),('c',0),('a',2),('b',1),('a',3),('d',0),('a',4),('b',2)]}
 pairs' :: Stream (Char, Int)
 pairs' = [(x, y) | x <- Stream ['a' .. 'z'], y <- Stream [0 ..]]
+
+pairs'' = do 
+  x <- Stream ['a' .. 'z']
+  y <- Stream [0 ..]
+  return (x, y)
