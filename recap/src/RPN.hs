@@ -1,4 +1,4 @@
-module RPN where
+module RPN ( eval ) where
 
 import Control.Monad.State
 
@@ -7,27 +7,36 @@ type Stack = [Int]
 type EvalM = State Stack
 
 push :: Int -> EvalM ()
-push x = modify (x:)
+push x = do
+  oldStack <- get
+  put (x : oldStack)
 
 pop :: EvalM Int
 pop = do
-  stack <- get
-  put (tail stack)
-  return (head stack)
+  oldStack <- get 
+  put (tail oldStack)
+  return (head oldStack)
 
 eval :: String -> Int
 eval expr =
-    evalState go []
+    evalState (go (words expr)) []
   where
-    go = mapM_ step (words expr) >> pop
-    step "+" = binOp (+)
-    step "-" = binOp (-)
-    step "*" = binOp (*)
-    step t = push (read t)
-    binOp op = do
-      x <- pop
-      y <- pop
-      push (op y x)
+    go :: [String] -> EvalM Int
+    go [] = do
+      pop
+    go (h : t) = case h of
+      h 
+        | h `elem` ["+", "-", "*"] -> do
+          a <- pop
+          b <- pop
+          case h of 
+            "+" -> push (a + b)
+            "-" -> push (b - a)
+            "*" -> push (a * b)
+          go t
+        | otherwise -> do
+          push (read h :: Int)
+          go t
 
 main :: IO ()
 main = do 
