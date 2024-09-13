@@ -1,6 +1,7 @@
 module Main (main) where
 
-import Lib
+import Imp.Programs
+import Imp.Eval
 
-main :: IO ()
-main = someFunc
+main = do
+  mapM_ runProgram programs

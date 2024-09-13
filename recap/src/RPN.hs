@@ -15,7 +15,7 @@ pop = do
   put (tail stack)
   return (head stack)
 
-eval :: String -> Maybe Int
+eval :: String -> Int
 eval expr =
     evalState go []
   where
@@ -23,7 +23,7 @@ eval expr =
     step "+" = binOp (+)
     step "-" = binOp (-)
     step "*" = binOp (*)
-    step t = push (readMaybe t)
+    step t = push (read t)
     binOp op = do
       x <- pop
       y <- pop

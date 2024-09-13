@@ -25,8 +25,14 @@ source-repository head
 
 library
   exposed-modules:
+      Imp.Eval
+      Imp.Lang
+      Imp.Programs
       Lib
+      MyMaybeT
       RPN
+      RPNMaybe
+      RPNStack
       Stream
   other-modules:
       Paths_recap
