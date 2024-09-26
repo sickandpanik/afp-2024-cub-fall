@@ -57,3 +57,4 @@ main = do
   checkS exprUndefinedVar (Right $ Left $ SL.UndefinedVar "y")
   checkS expr1 (Right $ Right $ Right $ L.VInt 9)
   checkS expr2 (Right $ Right $ Right $ L.VInt 4)
+  checkS expr3 (Right $ Right $ Right $ L.VInt 5)
